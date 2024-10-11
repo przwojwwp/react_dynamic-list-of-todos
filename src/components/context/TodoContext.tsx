@@ -32,6 +32,7 @@ export const TodoContextProvider = ({ children }: TodoContextProviderProps) => {
 
     loadTodos();
   }, []);
+
   // const [filter, setFilter] = useState<Filter>('All');
   // const [filteredTodos, setFilteredTodos] = useState<Todo[] | null>(null);
 

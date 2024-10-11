@@ -45,11 +45,15 @@ export const TodoModal = ({
 
             <p className="block" data-cy="modal-user">
               {/* <strong className="has-text-success">Done</strong> */}
-              <strong className="has-text-danger">Planned</strong>
+              <strong
+                className={`has-text-${todoModal?.completed ? 'success' : 'danger'}`}
+              >
+                {`${todoModal?.completed ? 'Done' : 'Planned'}`}
+              </strong>
 
               {' by '}
 
-              <a href="mailto:Sincere@april.biz">Leanne Graham</a>
+              <a href={`mailto:${userModal.email}`}>{userModal.name}</a>
             </p>
           </div>
         </div>

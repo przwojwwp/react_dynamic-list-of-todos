@@ -17,16 +17,12 @@ export const useTodoModal = () => {
           originalTodos?.find(todo => todo.id === todoModalId) || null;
 
         setTodoModal(foundTodo);
-      }
 
-      const foundUser: Todo | undefined = originalTodos?.find(
-        t => t.userId === todoModalId,
-      );
+        if (foundTodo) {
+          const userData = await getUser(foundTodo.userId);
 
-      if (foundUser) {
-        const userData = await getUser(foundUser.userId);
-
-        setUserModal(userData);
+          setUserModal(userData);
+        }
       }
     };
 
