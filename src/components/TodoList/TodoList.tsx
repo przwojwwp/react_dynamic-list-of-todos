@@ -1,12 +1,13 @@
-import { Todo } from '../../types/Todo';
+import { useTodoContext } from '../context/TodoContext';
 
 type Props = {
-  todos: Todo[] | null;
   todoModalId: number | null;
   onModalButtonClick: (userId: number) => void;
 };
 
-export const TodoList = ({ todos, todoModalId, onModalButtonClick }: Props) => {
+export const TodoList = ({ todoModalId, onModalButtonClick }: Props) => {
+  const { originalTodos } = useTodoContext();
+
   return (
     <table className="table is-narrow is-fullwidth">
       <thead>
@@ -23,7 +24,7 @@ export const TodoList = ({ todos, todoModalId, onModalButtonClick }: Props) => {
       </thead>
 
       <tbody>
-        {todos?.map(todo => {
+        {originalTodos?.map(todo => {
           return (
             <tr key={todo.id} data-cy="todo" className="">
               <td className="is-vcentered">{todo.id}</td>
