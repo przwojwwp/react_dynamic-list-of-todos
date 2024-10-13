@@ -1,12 +1,41 @@
-import { useTodoContext } from '../context/TodoContext';
+import { Filter } from '../../types/Filter';
+import { Todo } from '../../types/Todo';
 
 type Props = {
+  todos: Todo[] | null;
+  filter: Filter;
+  search: string;
   todoModalId: number | null;
   onModalButtonClick: (userId: number) => void;
 };
 
-export const TodoList = ({ todoModalId, onModalButtonClick }: Props) => {
-  const { originalTodos } = useTodoContext();
+export const TodoList = ({
+  todos,
+  filter,
+  search,
+  todoModalId,
+  onModalButtonClick,
+}: Props) => {
+  const filteredTodos =
+    todos?.filter(todo => {
+      if (filter === 'active') {
+        return !todo.completed;
+      }
+
+      if (filter === 'completed') {
+        return todo.completed;
+      }
+
+      return true;
+    }) || null;
+
+  if (!filteredTodos) {
+    throw new Error('Todos is missing');
+  }
+
+  const searchTodo = filteredTodos.filter(todo =>
+    todo.title.toLowerCase().includes(search.toLowerCase()),
+  );
 
   return (
     <table className="table is-narrow is-fullwidth">
@@ -24,7 +53,7 @@ export const TodoList = ({ todoModalId, onModalButtonClick }: Props) => {
       </thead>
 
       <tbody>
-        {originalTodos?.map(todo => {
+        {searchTodo?.map(todo => {
           return (
             <tr key={todo.id} data-cy="todo" className="">
               <td className="is-vcentered">{todo.id}</td>

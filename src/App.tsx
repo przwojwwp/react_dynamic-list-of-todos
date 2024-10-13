@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React from 'react';
+import React, { useState } from 'react';
 import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 
@@ -9,11 +9,15 @@ import { TodoModal } from './components/TodoModal';
 import { Loader } from './components/Loader';
 import { useTodoContext } from './components/context/TodoContext';
 import { useTodoModal } from './hooks/useTodoModal';
+import { Filter } from './types/Filter';
 
 export const App: React.FC = () => {
   const { originalTodos } = useTodoContext();
   const { todoModal, userModal, todoModalId, setTodoModalId, closeModal } =
     useTodoModal();
+
+  const [filter, setFilter] = useState<Filter>('all');
+  const [search, setSearch] = useState('');
 
   return (
     <>
@@ -23,7 +27,12 @@ export const App: React.FC = () => {
             <h1 className="title">Todos:</h1>
 
             <div className="block">
-              <TodoFilter />
+              <TodoFilter
+                selectedFilter={filter}
+                onFilterChange={setFilter}
+                searchValue={search}
+                onSearchChange={setSearch}
+              />
             </div>
 
             <div className="block">
@@ -31,6 +40,9 @@ export const App: React.FC = () => {
                 <Loader />
               ) : (
                 <TodoList
+                  todos={originalTodos}
+                  filter={filter}
+                  search={search}
                   todoModalId={todoModalId}
                   onModalButtonClick={setTodoModalId}
                 />

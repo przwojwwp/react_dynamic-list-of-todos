@@ -2,8 +2,12 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { Todo } from '../../types/Todo';
 import { getTodos } from '../../api';
 
+type FilterType = 'All' | 'Active' | 'Completed';
+
 type TodoContextProps = {
   originalTodos: Todo[] | null;
+  filter: FilterType;
+  setFilter: (filter: FilterType) => void;
 };
 
 export const TodoContext = createContext<TodoContextProps | undefined>(
@@ -24,32 +28,22 @@ type TodoContextProviderProps = React.PropsWithChildren<{}>;
 
 export const TodoContextProvider = ({ children }: TodoContextProviderProps) => {
   const [originalTodos, setOriginalTodos] = useState<Todo[] | null>(null);
+  const [filter, setFilter] = useState<FilterType>('All');
 
   useEffect(() => {
     const loadTodos = async () => {
-      await getTodos().then(setOriginalTodos);
+      const todos = await getTodos();
+
+      setOriginalTodos(todos);
     };
 
     loadTodos();
   }, []);
 
-  // const [filter, setFilter] = useState<Filter>('All');
-  // const [filteredTodos, setFilteredTodos] = useState<Todo[] | null>(null);
-
-  // const filterTodos = (filter: Filter) => {
-  //   if (filter === 'Active') {
-  //     return originalTodos?.filter(todo => !todo.completed);
-  //   }
-
-  //   if (filter === 'Completed') {
-  //     return originalTodos?.filter(todo => todo.completed);
-  //   }
-
-  //   return originalTodos;
-  // };
-
   const value = {
     originalTodos,
+    filter,
+    setFilter,
   };
 
   return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;

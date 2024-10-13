@@ -26,7 +26,7 @@ export const TodoModal = ({
               className="modal-card-title has-text-weight-medium"
               data-cy="modal-header"
             >
-              {`Todo #${userModal.id}`}
+              {`Todo #${todoModal?.id}`}
             </div>
 
             {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
