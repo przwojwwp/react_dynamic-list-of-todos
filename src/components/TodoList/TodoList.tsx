@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { Filter } from '../../types/Filter';
 import { Todo } from '../../types/Todo';
 
@@ -68,7 +69,10 @@ export const TodoList = ({
               )}
               <td className="is-vcentered is-expanded">
                 <p
-                  className={`${!todo.completed ? 'has-text-danger' : 'has-text-success'}`}
+                  className={classNames({
+                    'has-text-danger': !todo.completed,
+                    'has-text-success': todo.completed,
+                  })}
                 >
                   {todo.title}
                 </p>
