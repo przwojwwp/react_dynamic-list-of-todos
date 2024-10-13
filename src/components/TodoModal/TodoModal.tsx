@@ -1,6 +1,7 @@
 import { Loader } from '../Loader';
 import { User } from '../../types/User';
 import { Todo } from '../../types/Todo';
+import classNames from 'classnames';
 
 type Props = {
   todoModal: Todo | null;
@@ -46,7 +47,10 @@ export const TodoModal = ({
             <p className="block" data-cy="modal-user">
               {/* <strong className="has-text-success">Done</strong> */}
               <strong
-                className={`has-text-${todoModal?.completed ? 'success' : 'danger'}`}
+                className={classNames({
+                  'has-text-succes': todoModal?.completed,
+                  'has-text-danger': !todoModal?.completed,
+                })}
               >
                 {`${todoModal?.completed ? 'Done' : 'Planned'}`}
               </strong>
