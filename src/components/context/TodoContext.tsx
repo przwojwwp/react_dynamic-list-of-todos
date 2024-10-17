@@ -1,13 +1,12 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { Todo } from '../../types/Todo';
 import { getTodos } from '../../api';
-
-type FilterType = 'All' | 'Active' | 'Completed';
+import { Filter } from '../../types/Filter';
 
 type TodoContextProps = {
   originalTodos: Todo[] | null;
-  filter: FilterType;
-  setFilter: (filter: FilterType) => void;
+  filter: Filter;
+  setFilter: (filter: Filter) => void;
 };
 
 export const TodoContext = createContext<TodoContextProps | undefined>(
