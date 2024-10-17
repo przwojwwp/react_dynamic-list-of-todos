@@ -27,7 +27,7 @@ type TodoContextProviderProps = React.PropsWithChildren<{}>;
 
 export const TodoContextProvider = ({ children }: TodoContextProviderProps) => {
   const [originalTodos, setOriginalTodos] = useState<Todo[] | null>(null);
-  const [filter, setFilter] = useState<FilterType>('All');
+  const [filter, setFilter] = useState<Filter>('all');
 
   useEffect(() => {
     const loadTodos = async () => {
